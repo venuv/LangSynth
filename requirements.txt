@@ -1,0 +1,10 @@
+langchain==0.0.208
+langchainplus-sdk==0.0.16
+streamlit==1.19.0
+chromadb==0.3.26
+streamlit==1.19.0
+altair==4.2.2
+plotly==5.15.0
+textblob==0.17.1
+openpyxl==3.1.1
+openai==0.27.2
