@@ -5,7 +5,38 @@ from langchain.chains import LLMChain
 import random
 import string
 import re
+import json
+import os
 
+def partial_template_resolver(var, value, target):
+    return target.replace(f'{{{var}}}', value)
+
+def read_config_file(file_name=".langsynth"):
+    with open(file_name, 'r') as f:
+        config = json.load(f)
+
+    return config
+
+def get_hidden_directory_name(base_name):
+    return "./." + base_name
+
+def create_dir_if_not_exists(dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+        
+'''
+def read_config_file(file_name=".langsynth"):
+    config = {}
+    with open(file_name, 'r') as f:
+        lines = f.readlines()
+
+    for line in lines:
+        print(f"line is {line}")
+        name, value = line.strip().split(':')  # split the line into name and value
+        config[name] = value  # store in dictionary
+
+    return config
+'''
 
 def extract_name(lm, intro):
     pt = "return the person name mentioned in  {intro}. if you are absolutely sure it is not present in the {intro}, return None"
