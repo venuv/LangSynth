@@ -13,7 +13,7 @@ The core capability is as follows:
 - dashboard.py. this generates a synthetic person dashboard. this dashboard provides functionality to explore the synth population, select persona of interest and interview them. you can load a survey into the dashboard (one is provided as an example). synth interviews are conducted one synth at a time
 
 ## Work
-Griffin Workflow (Jan15):
+Griffin Workflow (July 15):
 - chroma_report.py: have build a schema agnostic 'data repair' capability that is able to fix LLM wanderings in Chroma and publish the cleaned up entries to an XLS for the dashboard to ingest
 - dashboard.py: enable dashboard to interact with more than one chroma database my adding a database selector. enable interviews to be exported to either an XLS or published into Chroma
 -education example. outline an education example and build an example databasse and dashboard with that population
