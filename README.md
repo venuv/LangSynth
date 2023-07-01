@@ -3,7 +3,7 @@
 ## Vision (short form)
 AI hitherto has been 'big company' friendly. This work hopes to be a small contribution in democratizing AI application frameworks to help small organizations (startups, small educational institutions and non-profits) - in particular in performing consumer insights in cost effective ways on entirely synthetic populations for cents to the dollar. LangSynth enables these organizations to quickly stand up synthetic audiences and test them as interview panels with entirely synthetic interviews. LangSynth can be used as a precursor to, in addition to or in order to broaden traditional panels.
 
-This Vimeo video gives you an aerial view of the system
+This Vimeo video gives you an aerial view of the system .. <video TBD>
 
 ## Architecture
 ![Synth Workflow](ls_arch.jpeg)
