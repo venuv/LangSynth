@@ -1,6 +1,6 @@
 # LangSynth
 
-##Vision (short form)
+## Vision (short form)
 AI hitherto has been 'big company' friendly. This work hopes to be a small contribution in democratizing AI application frameworks to help small organizations (startups, educational institutions and non-profits) - in particular in performing consumer insights in cost effective ways on entirely synthetic populations with speed and steerability. LangSynth (built on LangChain) enables these organizations to quickly stand up synthetic audiences and test them as interview panels with entirely synthetic interviews. LangSynth can be used as a precursor to, in addition to, or in order to broaden traditional panels.
 
 [This Vimeo video](https://vimeo.com/845155294/1c2eb01d83?share=copy) gives you an aerial view of the system
@@ -19,8 +19,8 @@ The core capability is as follows:
 - dashboard.py: enable dashboard to interact with more than one chroma database my adding a database selector. enable interviews to be exported to either an XLS or published into Chroma
 
 
-##Future Use Cases
+## Future Use Cases
 Work with Jonathan Engelsma and team @ Grand Valley State to enhance this to support education experience
 
-##License
+## License
 Apache 2.0 style free for use (but with attribution - Venu Vasudevan, perbacco.ai)
