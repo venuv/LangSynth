@@ -14,6 +14,9 @@ from langchain.chat_models import ChatOpenAI
 import re
 from textblob import TextBlob
 
+from utilities import get_hidden_directory_name, create_dir_if_not_exists, read_config_file
+
+
 def convert_text(text):
     # Extract the subset after 'Story:'
     match = re.search('Story:(.*)', text)
@@ -56,13 +59,9 @@ def conduct_interview(persona, question_list):
         if n==1:
             question = preamble + " " + question
         response = conversation.predict(input=question)
-            #questionnaire_progress.write("completed "+ str(n)
-            #                             +" out of "+str(question_list_size))
         print(f"Progress - {str(n)} of {str(question_list_size)}")
         n += 1
         conversation_log.append({"Context": question,"Response": response})
-    # your code here that generates the df dataframe
-#    df = "you crushed it!"
     return conversation_log
 
 
@@ -103,8 +102,11 @@ def plot_scatter(df):
     )
     return fig
 
+config = read_config_file()
+dashboard_input_file = config.get('dashboard_input_file')
+
 # Load your data
-df = pd.read_excel("population.xlsx")
+df = pd.read_excel(dashboard_input_file)
 df['formatted_story'] = df.apply(format_hover_text, axis=1)
 df['region_num'] = df['region'].astype('category').cat.codes
 df['severity_num'] = df['severity'].astype('category').cat.codes
@@ -114,7 +116,7 @@ df['info'] = df['name'] + ', Age: ' + df['age'].astype(str) + ', Story: ' + df['
 
 
 # Setup Streamlit layout
-st.title("Zevo Synth Dashboard")
+st.title("LangSynth Dashboard")
 
 st.header("Explore Population")
 fig = plot_scatter(df)
@@ -125,6 +127,8 @@ st.header("Shortlist Interviewees")
 # Here you can place your widget for shortlisting interviewees.
 # For example, a multiselect widget where you can select names from a list
 #shortlist = st.multiselect("Select Interviewees", options=df['name'].unique())
+print(df)
+df['info'] = df['info'].astype(str)
 shortlist = st.multiselect("Select Interviewees", options=sorted(df['info']))
 
 st.write("You selected these interviewees: ", shortlist)
@@ -138,14 +142,11 @@ uploaded_file = st.file_uploader("Choose an XLS file", type=["xlsx","xls"])
 
 # Load_interview button
 if st.button('Load Interview'):
-#    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
-#        data = pd.read_csv(uploaded_file)
         data = pd.read_excel(uploaded_file, usecols=[0], engine="openpyxl")
         column_values = data.iloc[:, 0].tolist()
         question_list = column_values
 
-        #st.session_state.data = data  # Store data in session_state for access after re-running
         st.session_state.data = question_list  # Store data in session_state for access after re-running
     else:
         st.write('No file uploaded yet')
@@ -156,7 +157,6 @@ if 'data' in st.session_state:
     
 # Conduct_interview button
 if st.button('Conduct Interview'):
-    # Here, write the code you need to perform the interview
     st.write(f'Conducting interview for: {candidate}')
     df = conduct_interview(candidate, st.session_state.data)
     st.write(df)

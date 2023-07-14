@@ -24,32 +24,20 @@ def create_dir_if_not_exists(dir_name):
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
         
-'''
-def read_config_file(file_name=".langsynth"):
-    config = {}
-    with open(file_name, 'r') as f:
-        lines = f.readlines()
-
-    for line in lines:
-        print(f"line is {line}")
-        name, value = line.strip().split(':')  # split the line into name and value
-        config[name] = value  # store in dictionary
-
-    return config
-'''
-
 def extract_name(lm, intro):
-    pt = "return the person name mentioned in  {intro}. if you are absolutely sure it is not present in the {intro}, return None"
+    pt = "return the person name mentioned in  {intro}. it is the word after the words I am. if you are absolutely sure it is not present in the {intro}, return None"
     xtract_prompt = ChatPromptTemplate.from_template(pt)
     chain = LLMChain(llm=lm, prompt=xtract_prompt)
     name = chain.run(intro)
+    print(f"[EXTRACT_NAME] {name}: {intro}")
     return name
 
 def extract_age(lm, intro):
-    pt = "return the person age mentioned in  {intro}. if you are absolutely sure it is not present in the {intro}, return None"
+    pt = "return the person age mentioned in  {intro}. it is a number based word like 35, or a word with dashes like 35-44.if you are absolutely sure it is not present in the {intro}, return None"
     xtract_prompt = ChatPromptTemplate.from_template(pt)
     chain = LLMChain(llm=lm, prompt=xtract_prompt)
     age = chain.run(intro)
+    print(f"[EXTRACT_AGE] {age}:{intro}")
     return age
 
 def extract_city(lm, intro):
@@ -57,6 +45,7 @@ def extract_city(lm, intro):
     xtract_prompt = ChatPromptTemplate.from_template(pt)
     chain = LLMChain(llm=lm, prompt=xtract_prompt)
     city = chain.run(intro)
+    print(f"[EXTRACT_CITY] {city}:{intro}")    
     return city
 
 def extract_region(lm, intro, city):
@@ -85,13 +74,8 @@ def generate_random_string(length):
 
 def process_stories(stories,lm,collection):
 
-    '''
-    # Remove newlines from stories collective
-    stories_without_newlines = stories.replace("\n", " ")
-    #print(f"stories without newlines is {stories_without_newlines}")
-    stories = re.split(r'(?=Hi, I am)', stories_without_newlines)
-    '''
-
+    lm = ChatOpenAI(model="gpt-3.5-turbo",temperature=0) # a more deterministic LLM for compilin story!
+    
     stories = re.split(r'(?=Hi, I am)', stories)
     stories = [story for story in stories if re.search('[a-zA-Z]', story)]
 

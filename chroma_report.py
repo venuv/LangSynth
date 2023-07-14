@@ -11,6 +11,8 @@ from time import sleep
 from transformers import pipeline
 import re
 
+from utilities import get_hidden_directory_name, create_dir_if_not_exists, read_config_file
+
 llm = ChatOpenAI(temperature=0.2)
 
 # Define the classifier
@@ -30,6 +32,8 @@ def region_fix_llm(sentence):
     result = classifier(sentence, regions)
     predicted_label = result["labels"][result["scores"].index(max(result["scores"]))]
     print(f"Severity - {predicted_label}")
+    if predicted_label not in labels:
+        predicted_label = "Moderate"
     return predicted_label
 
 def correct_region(sentence):
@@ -40,8 +44,14 @@ def correct_region(sentence):
     return region_fix_llm(sentence)
 
 
-chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet",persist_directory="./.zevo"))
-collection = chroma_client.get_or_create_collection(name="zevo_raw")
+config = read_config_file()
+db_dir = config.get('db_dir')
+db_dir = get_hidden_directory_name(db_dir)
+collection_name = config.get('collection_name')
+dashboard_input_file = config.get('dashboard_input_file')
+
+chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet",persist_directory=db_dir))
+collection = chroma_client.get_or_create_collection(name=collection_name)
 
 size = collection.count()
 foo = collection.get(
@@ -55,15 +65,13 @@ print(f"collection size is {size}")
 expanded_foo = [
     {**metadata, 'story': document} for metadata, document in zip(foo['metadatas'], foo['documents'])
 ]
-#expanded_foo['severity'] = expanded_foo['story'].apply(extract_severity)
-#size = expanded_foo.count()
-#print(f"collection size is {size}")
+
 
 # Convert the list of dictionaries into a DataFrame
 df = pd.DataFrame(expanded_foo)
 df['severity'] = df['story'].apply(extract_severity)
 df['region'] = df['region'].apply(correct_region)
 
-print(df)
-df.to_excel('zevo_population.xlsx', index=False)
+print(f"Data being exported to {dashboard_input_file} is: \n {df}")
+df.to_excel(dashboard_input_file, index=False)
 
