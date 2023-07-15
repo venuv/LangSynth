@@ -8,7 +8,7 @@ Demo video in this repo gives you an aerial view of the system
 ## Architecture
 ![Synth Workflow](ls_arch.jpeg)
 The core capability is as follows:
-- pop.py allows you to create a population of synthetic persona. For now the prompts are specific to Zevo. The persona are stored in a Chroma database called '.zevo' (which is hardwired in the code at the moment. ). currently there is a .zevo checked-in with about 100 persona ('cp -R dotzevo .zevo')
+- pop.py allows you to create a population of synthetic persona. The persona are stored in a Chroma database whose name is configurable in .langsynth
 - chroma_report.py reads the zevo chroma DB, makes some correcitons to the 'liberties' that GPT took in naming regions and such. It then publishes the corrected database entries to a 'population.xls' file for the dashboard to access
 - dashboard.py. this generates a synthetic person dashboard. this dashboard provides functionality to explore the synth population, select persona of interest and interview them. you can load a survey into the dashboard (one is provided as an example). synth interviews are conducted one synth at a time
 - .langsynth is the config file to configure Chroma database name (db_dir), the persona prompt (persona_prompt), the product story you want to interview them on (product_prompt) and the excel file interface between the database and the dashboard
