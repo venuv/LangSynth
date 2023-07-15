@@ -1,7 +1,7 @@
 # LangSynth
 
 ## Vision (short form)
-AI hitherto has been 'big company' friendly. This work hopes to be a small contribution in democratizing AI application frameworks to help small organizations (startups, educational institutions and non-profits) - in particular in performing consumer insights in cost effective ways on entirely synthetic populations with speed and steerability. LangSynth (built on LangChain) enables these organizations to quickly stand up synthetic audiences and test them as interview panels with entirely synthetic interviews. LangSynth can be used as a precursor to, in addition to, or in order to broaden traditional panels.
+AI hitherto has been 'big company' friendly. This work hopes to be a small contribution in democratizing GenAI application frameworks to enable consumer insights in small organizations (startups, educational institutions and non-profits) - in particular in performing consumer insights in cost effective ways on entirely synthetic populations with speed and steerability. LangSynth (built on LangChain) enables these organizations to quickly stand up synthetic audiences and test them as interview panels with entirely synthetic interviews. LangSynth can be used as a precursor to, in addition to, or in order to broaden traditional panels.
 
 Demo video in this repo gives you an aerial view of the system
 
