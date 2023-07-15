@@ -23,4 +23,4 @@ The core capability is as follows:
 Work with Jonathan Engelsma and team @ Grand Valley State to enhance this to support education experience
 
 ## License
-Apache 2.0 style free for use (but with attribution - Venu Vasudevan, perbacco.ai)
+Apache 2.0 style free for use (but with explicit attribution - Venu Vasudevan, perbacco.ai)
