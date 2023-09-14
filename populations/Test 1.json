@@ -1,0 +1,86 @@
+{
+  "Name": "Test 1",
+  "Attributes": [
+    {
+      "Name": "Name",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Age",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Gender",
+      "Has_Labels": true,
+      "Labels": "Male, Female",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Salary",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Hobbies",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Favorite Meal",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Religion",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Location",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    },
+    {
+      "Name": "Birthplace",
+      "Has_Labels": false,
+      "Labels": "None",
+      "Is_Implied": false,
+      "Implied_By": "Name",
+      "Has_Clarifiers": false,
+      "Clarifiers": "None"
+    }
+  ]
+}

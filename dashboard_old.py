@@ -14,6 +14,16 @@ from langchain.chat_models import ChatOpenAI
 import re
 from textblob import TextBlob
 
+import os
+
+def set_api_key():
+    key_file = open('./api_key.txt')
+    line = key_file.readline()
+    key = line.strip()
+    print(f'Setting OPENAI API Key to {key}')
+    os.environ["OPENAI_API_KEY"] = key
+    return
+
 def convert_text(text):
     # Extract the subset after 'Story:'
     match = re.search('Story:(.*)', text)
@@ -103,6 +113,21 @@ def plot_scatter(df):
     )
     return fig
 
+def load_files_noext(from_dir):
+    population_files = os.listdir(from_dir)
+    population_files = [os.path.splitext(filename)[0] for filename in population_files]
+    return population_files
+
+
+# set key if needed
+if os.environ.get("OPENAI_API_KEY") is None:
+    set_api_key()
+
+# load population file options
+population_options = load_files_noext('./populations')
+product_options = load_files_noext('./products')
+
+# TODO: alter to laod dynamically
 # Load your data
 df = pd.read_excel("population.xlsx")
 df['formatted_story'] = df.apply(format_hover_text, axis=1)
@@ -114,7 +139,13 @@ df['info'] = df['name'] + ', Age: ' + df['age'].astype(str) + ', Story: ' + df['
 
 
 # Setup Streamlit layout
-st.title("Zevo Synth Dashboard")
+#st.title("Zevo Synth Dashboard")
+st.title("LangSynth")
+
+curr_product = st.selectbox("Select Product", options=sorted(product_options))
+curr_population = st.selectbox("Select Population", options=sorted(population_options))
+
+st.title(f'{curr_product} Synth Dashboard')
 
 st.header("Explore Population")
 fig = plot_scatter(df)

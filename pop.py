@@ -10,13 +10,57 @@ from chromadb.config import Settings
 
 from utilities import generate_population
 
+"""
+TODO:
+
+- get demographic details from JSON
+    - ex: declare decile range of age in JSON file w/ default if not specified
+    
+- add option to clarify a person/demographic details to the model, ex: "it should start off with all the persona details (name, gender, age, age decile, city, region e.g. southeast, home type e.g. apartment/single family/)" wherein region and home type have clarifiers
+"""
+
+"""
+PRODUCT ATTRS:
+
+REQUIRED:
+name - product name (ex: Zevo)
+product_type - product type (ex: bug product)
+outcome - expected product outcome (ex: bug and pest control)
+
+OPTIONAL:
+url - product/website link (ex: https://zevoinsect.com/all-products/)
+
+"""
+
 
 #llm = ChatOpenAI(temperature=0.9)
-llm = PromptLayerChatOpenAI(pl_tags=["langchain"],temperature=0.9,return_pl_id=True)
+llm = PromptLayerChatOpenAI(pl_tags=["langchain"], temperature=0.9, return_pl_id=True)
 
 #Chroma initialize
 chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet",persist_directory="./.zevo"))
 #pop = chroma_client.create_collection(name="population")
+
+def build_demographic_prompt():
+
+    return
+
+def build_story_prompt(product, persona_elements, interview_questions):
+    story_query = (
+        # story preamble
+        f'for each {{persona}} that has an awareness of {product["name"]} '
+        f'they should first state their full persona details {", ".join(persona_elements)}'
+        
+        # personal details
+        f'they should then tell their {product["name"]} ({product["product_type"]}, {product["url"] if "url" in product.keys() else ""}) story.  the story should be narrated in first person. i repeat all stories should be in first person starting off with Hi, I am ... every persona story should be in a single contiguous paragraph. should end the story with two carriage returns (aka newlines).'
+        f'it should contain the following elements and be a single paragraph with no carriage returns- it should start off with all the persona details {", ".join(persona_elements)} '
+        
+        # interview questions
+        f'{"? ".join(interview_questions)}'
+        
+        # negative case e.g., no knowledge of product.
+        f'for persona\'s who do not have an awareness of {product["name"]}, the story should simply state in first person that they are not aware of {product["name"]} and also share the products they use for {product["outcome"]}.'
+                   )
+    return story_query
 
 # Demographic Prompt Section
 demo1 = """\
@@ -50,4 +94,3 @@ zevo_collection = chroma_client.get_or_create_collection(name="zevo_raw")
 stories = generate_population(llm, chain_one, chain_two, demo1,zevo_collection)
 
 print(f"\npeek at chroma collection -\n",zevo_collection.peek())
-
